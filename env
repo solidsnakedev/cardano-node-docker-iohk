@@ -1,0 +1,2 @@
+CARDANO_NODE_SOCKET_PATH="/root/node/db/node.socket"
+TESNET_MAGIC=1097911063
