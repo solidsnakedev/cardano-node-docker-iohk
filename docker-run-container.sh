@@ -55,7 +55,7 @@ PORT="6000"
 TOPOLOGY="/node/configuration/testnet-topology.json"
 CONFIG="/node/configuration/testnet-config.json"
 DBPATH="/db"
-SOCKETPATH="/node/node.socket"
+SOCKETPATH="/node/ipc/node.socket"
 
 echo -e "- Docker container will run cardano-node with the following parameters :\nhost : ${HOSTADDR}\nport: ${PORT}\ntopology: ${TOPOLOGY}\nconfig: ${CONFIG}\ndbpath: ${DBPATH}\nsocketpath: ${SOCKETPATH}\n"
 echo -e "- Docker container will bind the following directories :\n$PWD/configuration/ \n$PWD/db/ \n$PWD/logs/ \n"
@@ -64,6 +64,7 @@ docker run  -d \
     -v $PWD/configuration/:/node/configuration \
     -v $PWD/db/:/node/db \
     -v $PWD/logs/:/node/logs \
+    -v $PWD/ipc/:/node/ipc \
     --env-file env \
     --entrypoint cardano-node \
     inputoutput/cardano-node \
@@ -83,3 +84,5 @@ docker run  -d \
 # inputoutput/cardano-node \ - the official iohk cardano-node image to use
 #  run - cardano-node option to run the node
 # the rest are just cardano-node parameters
+
+docker ps
