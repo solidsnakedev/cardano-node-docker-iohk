@@ -13,7 +13,7 @@ if [[ ${ans} == "y" ]]; then
     $URL_CONFIG_FILES/testnet-topology.json
     echo -e "\n- Updating configurationfiles .. changing stdout logs to a file log destination \n"
     sed -i 's/StdoutSK/FileSK/' ${PWD}/configuration/testnet-config.json
-    sed -i 's/stdout/\/logs\/node.log/' ${PWD}/configuration/testnet-config.json
+    sed -i 's/stdout/\/node\/logs\/node.log/' ${PWD}/configuration/testnet-config.json
 fi
 }
 
@@ -52,18 +52,18 @@ echo -e "\n- Found configuration files :\n$(ls configuration) \n"
 
 HOSTADDR="0.0.0.0"
 PORT="6000"
-TOPOLOGY="/configuration/testnet-topology.json"
-CONFIG="/configuration/testnet-config.json"
+TOPOLOGY="/node/configuration/testnet-topology.json"
+CONFIG="/node/configuration/testnet-config.json"
 DBPATH="/db"
-SOCKETPATH="/db/node.socket"
+SOCKETPATH="/node/node.socket"
 
 echo -e "- Docker container will run cardano-node with the following parameters :\nhost : ${HOSTADDR}\nport: ${PORT}\ntopology: ${TOPOLOGY}\nconfig: ${CONFIG}\ndbpath: ${DBPATH}\nsocketpath: ${SOCKETPATH}\n"
 echo -e "- Docker container will bind the following directories :\n$PWD/configuration/ \n$PWD/db/ \n$PWD/logs/ \n"
 
 docker run  -d \
-    -v $PWD/configuration/:/configuration \
-    -v $PWD/db/:/db \
-    -v $PWD/logs/:/logs \
+    -v $PWD/configuration/:/node/configuration \
+    -v $PWD/db/:/node/db \
+    -v $PWD/logs/:/node/logs \
     --env-file env \
     --entrypoint cardano-node \
     inputoutput/cardano-node \
